@@ -74,9 +74,8 @@ def celltype_predict_actinn(adata:AnnData, train_data_path:str, outpath:str, tra
         predicted_label.append(label_to_type_dict[test_predict[i]])
     predicted_label = pd.DataFrame({output_label_name:predicted_label}, index=barcode)
     predicted_label.to_csv(os.path.join(outpath,output_label_name+"_predicted_label.txt"), sep="\t", index=False)
-    
+    adata.obs = adata.obs.merge(predicted_label, how='outer', left_index=True, right_index=True)
     if output_h5ad:
-        adata.obs = adata.obs.merge(predicted_label, how='outer', left_index=True, right_index=True)
         adata.write_h5ad(os.path.join(outpath,"predicted_label.h5ad"))
 
     return adata, parameters
