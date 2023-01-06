@@ -28,11 +28,17 @@ def celltype_predict_actinn(adata:AnnData, train_data_path:str, outpath:str, tra
         Path to output directory
     train_label_name
         Name of column present in train_data with labels for training.
+    output_label_name
+        Name to add to input adata.obs with the predicted celltype names
+    output_h5ad
+        If True a h5ad objected with predicted celltypes will be saved to the outpath with the file name "predicted_label.h5ad"
 
     Returns
     -------
     adata
         AnnData object with doublet score calculated.
+    parameters
+        model parameters
     """
     test_set = adata.to_df().T
 
